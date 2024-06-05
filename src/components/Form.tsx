@@ -3,7 +3,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { categories } from "../App";
 
-
 const schema = z.object({
   description: z.string().min(3),
   amount: z.number({ invalid_type_error: "Amount is Required" }).min(18),
@@ -24,7 +23,7 @@ const Form = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group">
-        <label htmlFor="name">Cescription</label>
+        <label htmlFor="name">Description</label>
         <input
           type="text"
           className="form-control"
@@ -58,9 +57,9 @@ const Form = () => {
           <option></option>
           {categories.map((category) => (
             <option key={category} value={category}>
-            {category}
+              {category}
             </option>
-        ))}
+          ))}
         </select>
       </div>
 
