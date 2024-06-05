@@ -3,6 +3,7 @@ import ExpenseList from "./components/ExpenseList";
 import ExpenseFilter from "./components/ExpenseFilter";
 import { useState } from "react";
 
+
 export const categories = ["groceries", "utilities", "entertainement"];
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         onDelete={(id) => setExpenses(expenses.filter((e) => e.id !== id))}
       />
     </div>
+    
   );
 }
 
