@@ -16,4 +16,4 @@ This is a simple expense tracker web application built with **React** that allow
 - **JavaScript (ES6+)**: Programming language for building the logic of the application.
 - **HTML**: Structure of the web pages.
 
-![Expense Tracker](https://i.imgur.com/your_image.png)
+![Expense Tracker](https://github.com/HarshalVankudre777/ExpenseTracker/blob/main/demo%20github.png)
