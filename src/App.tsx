@@ -18,7 +18,7 @@ function App() {
 
   return (
     <ChakraProvider>
-      <Box  mx="auto" py={8}>
+      <Box maxWidth='800px' mx="auto" py={8}>
         <Heading mb={6}>Expense Tracker</Heading>
         <VStack spacing={6}>
           <Box w="100%">
