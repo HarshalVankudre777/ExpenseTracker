@@ -1,3 +1,16 @@
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  Button
+} from '@chakra-ui/react'
+
 
 interface Expense {
   id: number;
@@ -15,41 +28,44 @@ const ExpenseList = ({ expenses, onDelete }: Props) => {
   if (expenses.length === 0) return null;
 
   return (
-    <table className="table table-bordered">
-      <thead>
-        <tr>
-          <th>Description</th>
-          <th>Amount</th>
-          <th>Category</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
+    <TableContainer>
+    <Table variant = 'striped' colorScheme='blue' >
+      <TableCaption>List of Expenses with Total Amount</TableCaption>
+      <Thead>
+        <Tr>
+          <Th>Description</Th>
+          <Th>Amount</Th>
+          <Th>Category</Th>
+          <Th></Th>
+        </Tr>
+      </Thead>
+      <Tbody>
         {expenses.map((expense) => (
-          <tr key={expense.id}>
-            <td>{expense.description}</td>
-            <td>€{expense.amount.toFixed(2)}</td>
-            <td>{expense.category}</td>
-            <td>
-              <button
-                className="btn btn-outline-danger"
+          <Tr key={expense.id}>
+            <Td>{expense.description}</Td>
+            <Td>€{expense.amount.toFixed(2)}</Td>
+            <Td>{expense.category}</Td>
+            <Td>
+              <Button
+                colorScheme='red'
                 onClick={() => onDelete(expense.id)}
               >
                 Delete
-              </button>
-            </td>
-          </tr>
+              </Button>
+            </Td>
+          </Tr>
         ))}
-      </tbody>
-      <tfoot>
-        <tr>
-          <td>Total</td>
-          <td>€{expenses.reduce((acc, expense) => expense.amount + acc, 0).toFixed(2)}</td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tfoot>
-    </table>
+      </Tbody>
+      <Tfoot>
+        <Tr>
+          <Td>Total</Td>
+          <Td>€{expenses.reduce((acc, expense) => expense.amount + acc, 0).toFixed(2)}</Td>
+          <Td></Td>
+          <Td></Td>
+        </Tr>
+      </Tfoot>
+    </Table>
+    </TableContainer>
   );
 };
 

@@ -1,20 +1,32 @@
 import { useForm } from "react-hook-form";
-import {  z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import categories from "../categories";
-
+import {
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  Select,
+} from "@chakra-ui/react";
 
 const schema = z.object({
-  description: z.string().min(3, { message: 'Description should be at least 3 characters.'}).max(50),
-  amount: z.number({ invalid_type_error: 'Amount is required.'}).min(0.01).max(100_000),
+  description: z
+    .string()
+    .min(3, { message: "Description should be at least 3 characters." })
+    .max(50),
+  amount: z
+    .number({ invalid_type_error: "Amount is required." })
+    .min(0.01)
+    .max(100_000),
   category: z.enum(categories, {
-    errorMap: () => ({ message: 'Category is required.'})
+    errorMap: () => ({ message: "Category is required." }),
   }),
 });
-
 type ExpenseFormData = z.infer<typeof schema>;
-
-interface Props { 
+interface Props {
   onSubmit: (data: ExpenseFormData) => void;
 }
 
@@ -27,58 +39,48 @@ const Form = ({ onSubmit }: Props) => {
   } = useForm<ExpenseFormData>({ resolver: zodResolver(schema) });
 
   return (
-    <form onSubmit={handleSubmit(data => {
+    <Box as="form" onSubmit={handleSubmit((data) => {
       onSubmit(data);
       reset();
     })}>
-      <div className="mb-3">
-        <label htmlFor="description" className="form-label">
-          Description
-        </label>
-        <input
+      <FormControl isInvalid={!!errors.description} mb={4}>
+        <FormLabel htmlFor="description">Description</FormLabel>
+        <Input
           {...register("description")}
           id="description"
           type="text"
-          className="form-control"
         />
-        {errors.description && (
-          <p className="text-danger">{errors.description.message}</p>
-        )}
-      </div>
-      <div className="mb-3">
-        <label htmlFor="amount" className="form-label">
-          Amount
-        </label>
-        <input
+        <FormErrorMessage>{errors.description?.message}</FormErrorMessage>
+      </FormControl>
+
+      <FormControl isInvalid={!!errors.amount} mb={4}>
+        <FormLabel htmlFor="amount">Amount</FormLabel>
+        <Input
           {...register("amount", { valueAsNumber: true })}
           id="amount"
           type="number"
-          className="form-control"
         />
-        {errors.amount && (
-          <p className="text-danger">{errors.amount.message}</p>
-        )}
-      </div>
-      <div className="mb-3">
-        <label htmlFor="category" className="form-label">
-          Category
-        </label>
-        <select {...register("category")} id="category" className="form-select">
+        <FormErrorMessage>{errors.amount?.message}</FormErrorMessage>
+      </FormControl>
+
+      <FormControl isInvalid={!!errors.category} mb={4}>
+        <FormLabel htmlFor="category">Category</FormLabel>
+        <Select {...register("category")} id="category">
           <option value=""></option>
           {categories.map((category) => (
             <option key={category} value={category}>
               {category}
             </option>
           ))}
-        </select>
-        {errors.category && (
-          <p className="text-danger">{errors.category.message}</p>
-        )}
-      </div>
-      <button className="btn btn-primary">Submit</button>
-    </form>
+        </Select>
+        <FormErrorMessage>{errors.category?.message}</FormErrorMessage>
+      </FormControl>
+
+      <Button colorScheme="blue" type="submit">
+        Submit
+      </Button>
+    </Box>
   );
 };
-
 
 export default Form;
